@@ -1,5 +1,6 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Cecil.Rocks;
 using PiePopper.Scripts;
 
 namespace PiePopper.Crackers
@@ -14,7 +15,8 @@ namespace PiePopper.Crackers
         public override bool Crack()
         {
             // Obtain OnLoadCoroutine.
-            MethodDefinition onLoadCoroutine = GetMethodDef(GetTypeDef("Config"), "OnLoadCoroutine");
+            TypeDefinition config = GetTypeDef("Config");
+            MethodDefinition onLoadCoroutine = GetMethodDef(config, "OnLoadCoroutine");
             
             // Ensure the module is found.
             if (onLoadCoroutine == null)
@@ -22,19 +24,9 @@ namespace PiePopper.Crackers
 
             Notify($"Located OnLoadCoroutine [{onLoadCoroutine}]!", System.ConsoleColor.Green);
 
-            // Build cache.
-            ILProcessor processor = onLoadCoroutine.Body.GetILProcessor();
-            Instruction nop = processor.Create(OpCodes.Nop);
-
             // Modify OnLoadCoroutine.
-            onLoadCoroutine.Body.Instructions.Clear();
-            processor.Append(nop);
             Notify($"OnLoadCoroutine IL instructions removed!", System.ConsoleColor.DarkGray);
-            // Break out the method.
-            processor.Append(processor.Create(OpCodes.Ldarg_0));
-            processor.Append(processor.Create(OpCodes.Call, onLoadCoroutine));
-            processor.Append(processor.Create(OpCodes.Ret));
-            Notify($"OnLoadCoroutine IL instructions fully replaced!", System.ConsoleColor.Green);
+            config.Methods.Remove(onLoadCoroutine);
 
             // Clear all quit calls.
             if (!Clear_smethod_0("Amaterasu",
@@ -42,7 +34,6 @@ namespace PiePopper.Crackers
                                  "Kamui",
                                  "ExpansionJutsu",
                                  "FireballJutsu",
-                                 "Rasengan",
                                  "Rasenshuriken",
                                  "RequirementItem",
                                  "RequirementLevel",
@@ -52,7 +43,8 @@ namespace PiePopper.Crackers
                                  "Chidori"
                                 )
                 ||
-                !ClearMethod("SameKillCount", "smethod_2")
+                !ClearMethod("SameKillCount", "smethod_2") ||
+                !ClearMethod("Rasengan", "smethod_11")
                )
             {
                 Notify($"Something went wrong clearing the Application.Quit() calls!", System.ConsoleColor.Red);

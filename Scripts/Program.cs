@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 
 namespace PiePopper
@@ -106,7 +105,7 @@ namespace PiePopper
         /// <summary>
         /// Convert the input bytes to a readable size..
         /// </summary>
-        private static string FormatSizeFromBytes(int byteCount) 
+        private static string FormatSizeFromBytes(int byteCount)
         {
             if (byteCount == 0)
             { return "0" + SizeReferences[0]; }

@@ -1,6 +1,6 @@
 ﻿using Mono.Cecil;
+using Mono.Cecil.Cil;
 using System;
-using System.Linq;
 
 namespace PiePopper.Scripts
 {
@@ -35,7 +35,7 @@ namespace PiePopper.Scripts
         /// <summary>
         /// Finish the crack.
         /// </summary>
-        protected void Eat() 
+        protected void Eat()
         {
             // Write the new changes.
             module.Write(path);
@@ -76,7 +76,12 @@ namespace PiePopper.Scripts
                 return false;
             }
 
-            GetMethodDef(GetTypeDef(type), methodName).Body.Instructions.Clear();
+
+            // Clear method body.
+            mDef.Body.Instructions.Clear();
+            var processor = mDef.Body.GetILProcessor();
+            processor.Append(processor.Create(OpCodes.Ret));
+
             return true;
         }
 
@@ -92,6 +97,20 @@ namespace PiePopper.Scripts
                     if (def.Name == name)
                     { return def; }
                 }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Get a field ref.
+        /// </summary>
+        protected FieldReference GetFieldRef(TypeDefinition type, string name)
+        {
+            foreach (var field in type.Fields)
+            {
+                if (field.Name == name)
+                { return field; }
             }
 
             return null;
