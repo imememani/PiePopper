@@ -18,7 +18,7 @@ namespace PiePopper
             ProcessStartInfo info = new ProcessStartInfo()
             {
                 FileName = Path.Combine(Directory.GetParent(typeof(De4dot).Assembly.Location).FullName, "binaries", "de4dot.exe"),
-                Arguments = source,
+                Arguments = $"\"{source}\"",
 
                 CreateNoWindow = true,
                 UseShellExecute = false,
