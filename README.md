@@ -32,3 +32,4 @@ public class Cracker: Popper
 }
 ```
 See [TrialsoftheShinobi.cs](https://github.com/imememani/PiePopper/blob/main/Scripts/Crackers/TrialsoftheShinobi.cs) for an example.
+Once you have tested and verified it's working create a pull request and I'll merge it.
