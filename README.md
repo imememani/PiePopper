@@ -11,3 +11,24 @@ Drag the dll into the .exe!
 
 # SUPPORTED MODS
 - TrialsoftheShinobi.dll
+
+# HOW DO I MAKE A CRACKER?
+New crackers can be made via just:
+```cs
+[PieHitList("YOUR NAME", "FILE NAME", "FILE VERSION", "CRACK DATE")]]
+public class Cracker: Popper
+{
+        /// <inheritdoc/>
+        public override void Bake()
+        {
+          // Called before Crack for cache/setup
+        }
+
+        /// <inheritdoc/>
+        public override bool Crack()
+        {
+          // Actual code ran to crack
+        }
+}
+```
+See [TrialsoftheShinobi.cs](https://github.com/imememani/PiePopper/blob/main/Scripts/Crackers/TrialsoftheShinobi.cs) for an example.
