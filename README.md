@@ -15,7 +15,8 @@ Drag the dll into the .exe!
 # HOW DO I MAKE A CRACKER?
 New crackers can be made via just:
 ```cs
-[PieHitList("YOUR NAME", "FILE NAME", "FILE VERSION", "CRACK DATE")]]
+//            AUTHOR      TARGET DLL   CRACK VERSION     DATE      USE PATREON CORE?
+[PieHitList("YOUR NAME", "FILE NAME", "FILE VERSION", "CRACK DATE", TRUE)]]
 public class Cracker: Popper
 {
         /// <inheritdoc/>
