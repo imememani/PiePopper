@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Scripts\Crackers\PatreonCore.cs" />
     <Compile Include="Scripts\Crackers\TrialsoftheShinobi.cs" />
     <Compile Include="Scripts\De4dot.cs" />
     <Compile Include="Scripts\PieHitList.cs" />
@@ -74,8 +75,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ILMerge.props" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

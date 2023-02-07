@@ -1,4 +1,5 @@
-﻿using PiePopper.Scripts;
+﻿using PiePopper.Crackers;
+using PiePopper.Scripts;
 using System;
 using System.IO;
 using System.Linq;
@@ -37,6 +38,19 @@ namespace PiePopper
                     Console.WriteLine($"{file} -> {popper.GetType()} by {details.authorName}[{details.version} @ {details.dateCracked}]");
                     Console.WriteLine("Starting crack . . .\n");
 
+                    // Does the target use patreoncore?
+                    if (details.usesPatreonCore && !(popper is PatreonCore))
+                    {
+                        Console.WriteLine("Cracking PatreonCore . . .\n");
+                        PatreonCore core = new PatreonCore();
+                        core.Bake(args[0]);
+
+                        if (core.Crack())
+                        { Console.WriteLine("Cracked PatreonCore!\n"); }
+                        else
+                        { Console.WriteLine("Unable to crack PatreonCore!\n"); }
+                    }
+
                     Console.WriteLine("Cleaning assembly from his shitty attempt at obfuscation. . .\n");
                     De4dot.Clean(args[0], out string cleaned);
                     File.Copy(args[0], Path.Combine(Directory.GetParent(args[0]).FullName, $"ORIGINAL-{file}"), true);
@@ -63,7 +77,7 @@ namespace PiePopper
                         Console.WriteLine($"=== [ END ] ===\n");
 
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Shit something has gone wrong! It's possible the crack may need updating, please report this with the following information:\n\n" +
+                        Console.WriteLine("It's possible the crack may need updating OR this mod doesn't need cracking(!!), please report this with the following information:\n\n" +
                                                $"Crack = {name} by {details.authorName} [for {details.version} @ {details.dateCracked}]\n" +
                                                $"File = [wants {details.crackName}] {file}\n" +
                                                $"Attempt Date = {DateTime.Now.ToShortDateString()} using {file}\n"
@@ -87,6 +101,10 @@ namespace PiePopper
 
             foreach (Type type in crackers)
             {
+                // Special exclusion.
+                if (type == typeof(PatreonCore))
+                { continue; }
+
                 PieHitList tmp = (PieHitList)Attribute.GetCustomAttribute(type, typeof(PieHitList));
 
                 if (tmp != null && file.Contains(tmp.crackName))
@@ -97,9 +115,10 @@ namespace PiePopper
                 }
             }
 
-            popper = null;
-            details = null;
-            return false;
+            // Attempt patreon core anyway.
+            popper = new PatreonCore();
+            details = (PieHitList)Attribute.GetCustomAttribute(popper.GetType(), typeof(PieHitList));
+            return true;
         }
 
         /// <summary>

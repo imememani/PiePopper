@@ -5,29 +5,24 @@ using PiePopper.Scripts;
 
 namespace PiePopper.Crackers
 {
+    /*
+     * ====================================
+     * | OBSOLETE SINCE PatreonCracker.cs |
+     * | PatreonCracker now cracks this   |
+     * | and various other mods of his.   |
+     * ====================================
+     * *
+     *  *
+     *   *
     /// <summary>
     /// Cracks TrialsoftheShinobi.dll
     /// </summary>
-    [PieHitList(".MemeMan#4489", "TrialsoftheShinobi.dll", "1.0.0.0", "06/02/2023")]
+    [PieHitList(".MemeMan#4489", "TrialsoftheShinobi.dll", "1.0.0.0", "06/02/2023", true)]
     public class TrialsoftheShinobi : Popper
     {
         /// <inheritdoc/>
         public override bool Crack()
         {
-            // Obtain OnLoadCoroutine.
-            TypeDefinition config = GetTypeDef("Config");
-            MethodDefinition onLoadCoroutine = GetMethodDef(config, "OnLoadCoroutine");
-            
-            // Ensure the module is found.
-            if (onLoadCoroutine == null)
-            { return false; }
-
-            Notify($"Located OnLoadCoroutine [{onLoadCoroutine}]!", System.ConsoleColor.Green);
-
-            // Modify OnLoadCoroutine.
-            Notify($"OnLoadCoroutine IL instructions removed!", System.ConsoleColor.DarkGray);
-            config.Methods.Remove(onLoadCoroutine);
-
             // Clear all quit calls.
             if (!Clear_smethod_0("Amaterasu",
                                  "AtomicDismantling",
@@ -69,4 +64,5 @@ namespace PiePopper.Crackers
             return true;
         }
     }
+    */
 }

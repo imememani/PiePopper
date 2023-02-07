@@ -12,13 +12,15 @@ namespace PiePopper.Scripts
         public string crackName = "TrialsoftheShinobi.dll";
         public string version = "1.0.0.0";
         public string dateCracked = "01/01/1997";
+        public bool usesPatreonCore = true;
 
-        public PieHitList(string authorName = ".MemeMan#4489", string crackName = "*.dll", string version = "1.0.0.0", string dateCracked = "01/01/1997")
+        public PieHitList(string authorName = ".MemeMan#4489", string crackName = "*.dll", string version = "1.0.0.0", string dateCracked = "01/01/1997", bool usesPatreonCore = true)
         {
             this.authorName = authorName;
             this.crackName = crackName;
             this.version = version;
             this.dateCracked = dateCracked;
+            this.usesPatreonCore = usesPatreonCore;
         }
     }
 }
