@@ -10,7 +10,7 @@ Drag the dll into the .exe!
 [Example Video](https://i.imgur.com/tHvhmNk.mp4)
 
 # SUPPORTED MODS
-- TrialsoftheShinobi.dll
+* As of 07/02/2023 with PatreonCore cracker all of his paywalled mods can be cracked :)
 
 # HOW DO I MAKE A CRACKER?
 New crackers can be made via just:
