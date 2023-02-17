@@ -2,7 +2,7 @@
  Cracks piepops mods.
  
  # Why?
-What he does is immoral and heavily against the license agreement of the B&S SDK, therefore any attempt to take this repo down will be met with a request to have his content taken down, **this repo simply removes segments of his code responsible for breaking the license agreement, it does not redistribute any of his code and therefore he can not claim any rights to this repo or its content**.
+I've shortened this to keep it simple, I don't believe in paywalling basic mods that take little to no effort then telling people it took you 700 years to make. **This repo does not redistribute any of his code and therefore can not claim any rights to this repo or its content, this does not reflect the company I work for in anyway, I as an individual created this of my own will under no external influence.** ;)
 
 # HOW TO USE
 Drag the dll into the .exe!
