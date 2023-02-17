@@ -34,20 +34,26 @@ namespace PiePopper.Crackers
             // Loop through all modules in the target assembly.
             // This will scan each method for calls to Quit the application
             // and remove them, this prevents his mods crashing your game.
-            foreach (var modules in module.Modules)
+            for (int i = 0; i < module.Modules.Count; i++)
             {
-                foreach (var type in modules.Types)
+                ModuleDefinition modules = module.Modules[i];
+
+                for (int x = 0; x < modules.Types.Count; x++)
                 {
-                    foreach (var method in type.Methods)
+                    TypeDefinition type = modules.Types[x];
+
+                    for (int j = 0; j < type.Methods.Count; j++)
                     {
+                        MethodDefinition method = type.Methods[j];
+
                         ILProcessor processor = method.Body.GetILProcessor();
 
-                        for (int i = method.Body.Instructions.Count - 1; i >= 0; i--)
+                        for (int k = method.Body.Instructions.Count - 1; k >= 0; k--)
                         {
-                            string operand = method.Body.Instructions[i].Operand?.ToString();
-                            if (method.Body.Instructions[i].OpCode == OpCodes.Call && string.CompareOrdinal(operand, "System.Void UnityEngine.Application::Quit()") == 0)
+                            string operand = method.Body.Instructions[k].Operand?.ToString();
+                            if (method.Body.Instructions[k].OpCode == OpCodes.Call && string.CompareOrdinal(operand, "System.Void UnityEngine.Application::Quit()") == 0)
                             {
-                                processor.Remove(method.Body.Instructions[i]);
+                                processor.Remove(method.Body.Instructions[k]);
                                 Console.WriteLine($"Removed Application.Quit() from {type.Name}->{method.Name}!");
                             }
                         }

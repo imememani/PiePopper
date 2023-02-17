@@ -53,7 +53,8 @@ namespace PiePopper
 
                     Console.WriteLine("Cleaning assembly from his shitty attempt at obfuscation. . .\n");
                     De4dot.Clean(args[0], out string cleaned);
-                    File.Copy(args[0], Path.Combine(Directory.GetParent(args[0]).FullName, $"ORIGINAL-{file}"), true);
+                    // File.Copy(args[0], Path.Combine(Directory.GetParent(args[0]).FullName, $"ORIGINAL-{file}"), true); // This causes load issues.
+                    File.SetAttributes(args[0], FileAttributes.Normal);
                     File.Copy(cleaned, args[0], true);
                     File.Delete(cleaned);
                     Console.WriteLine($"Cleaning complete, file size before '{sizeBefore}', size AFTER '{FormatSizeFromBytes(File.ReadAllBytes(args[0]).Length)}'!\n");
@@ -99,18 +100,18 @@ namespace PiePopper
         {
             Type[] crackers = typeof(Popper).Assembly.GetTypes().Where(t => t.IsSubclassOf(typeof(Popper))).ToArray();
 
-            foreach (Type type in crackers)
+            for (int i = 0; i < crackers.Length; i++)
             {
                 // Special exclusion.
-                if (type == typeof(PatreonCore))
+                if (crackers[i] == typeof(PatreonCore))
                 { continue; }
 
-                PieHitList tmp = (PieHitList)Attribute.GetCustomAttribute(type, typeof(PieHitList));
+                PieHitList tmp = (PieHitList)Attribute.GetCustomAttribute(crackers[i], typeof(PieHitList));
 
                 if (tmp != null && file.Contains(tmp.crackName))
                 {
                     details = tmp;
-                    popper = (Popper)Activator.CreateInstance(type);
+                    popper = (Popper)Activator.CreateInstance(crackers[i]);
                     return true;
                 }
             }
@@ -127,7 +128,7 @@ namespace PiePopper
         private static string FormatSizeFromBytes(int byteCount)
         {
             if (byteCount == 0)
-            { return "0" + SizeReferences[0]; }
+            { return $"0{SizeReferences[0]}"; }
 
             long bytes = Math.Abs(byteCount);
             int place = Convert.ToInt32(Math.Floor(Math.Log(bytes, 1024)));
